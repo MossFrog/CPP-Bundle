@@ -43,3 +43,41 @@ Data LinkedList::getData(int ID)
 	cout << "The ID " << ID << " Is not present." << endl;
 	return dummyHead->nodeData;
 }
+
+void LinkedList::Clear()
+{
+	//-- Temporary pointer for parsing --//
+	NodePtr tempPtr = dummyHead;
+
+	//-- Parse to the end of the list --//
+	while(tempPtr -> next != NULL)
+	{
+		tempPtr = tempPtr->next;
+	}
+
+	//-- Work our way back deleting all the nodes one by one --//
+	while(tempPtr -> prev != NULL)
+	{
+		tempPtr = tempPtr -> prev;
+		delete tempPtr -> next;
+	}
+}
+
+int LinkedList::returnSize()
+{
+	//-- Temporary pointer for parsing --//
+	NodePtr tempPtr = dummyHead;
+
+	//-- Counter for storing node count --//
+	int count = 0;
+
+	//-- Parse to the end of the list --//
+	while(tempPtr -> next != NULL)
+	{
+		tempPtr = tempPtr->next;
+		count++;
+	}
+
+	return count;
+}
+

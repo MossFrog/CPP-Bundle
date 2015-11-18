@@ -65,7 +65,11 @@ public:
 	//-- Retrieve Data from a node with the given ID --//
 	Data getData(int ID);
 
+	//-- Set the data of a given node with "ID" --//
 	void setData(int ID);
+
+	//-- Returns the length of the linked list excluding the dummy --//
+	int returnSize();
 };
 
 
