@@ -1,6 +1,6 @@
 #ifndef QUADTREE_H_
 #define QUADTREE_H_
-typedef struct quadTree *treePtr;
+typedef struct QuadTree *nodePtr;
 #include <iostream>
 #include <string>
 
@@ -22,16 +22,20 @@ private:
 
 public:
 	Data nodeData;
-	
+	string ID;
+
 	//-- Declare child Branches --//
-	quadTree * childAlpha;
-	quadTree * childBeta;
-	quadTree * childDelta;
-	quadTree * childGamma;
+	QuadTree * childAlpha;
+	QuadTree * childBeta;
+	QuadTree * childDelta;
+	QuadTree * childGamma;
 
 	//-- Constructor for the QuadTree --//
 	QuadTree()
 	{
+		//-- R determines that this is the Root of the QuadTree --//
+		ID = "R";
+
 		//-- Set all the fringes to NULL --//
 		childAlpha = NULL;
 		childBeta = NULL;
@@ -45,8 +49,8 @@ public:
 	//-- Creates new fringe nodes. --//
 	void branchNode();
 
-	//-- Finds the element in the tree --//
-	void findNode();
+	//-- Finds the element in the tree with the given ID and returns its Data --//
+	Data findNode(string ID);
 
 };
 
