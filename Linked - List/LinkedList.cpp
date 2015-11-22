@@ -44,6 +44,33 @@ Data LinkedList::getData(int ID)
 	return dummyHead->nodeData;
 }
 
+void LinkedList::Delete(int ID)
+{
+	//-- Create a temporary pointer --//
+
+	NodePtr tempPtr = dummyHead;
+
+	//-- Parse through the list until the desired ID is found, then return --//
+	while(tempPtr -> next != NULL)
+	{
+		if(tempPtr -> next -> ID == ID)
+		{
+			if(tempPtr -> next -> next != NULL)
+			{
+				NodePtr deletePtr = tempPtr -> next;
+				tempPtr -> next -> next -> prev = tempPtr;
+				tempPtr -> next = tempPtr -> next -> next;
+
+				delete *(deletePtr);
+
+				break;
+			}
+			
+		}
+		tempPtr = tempPtr->next;
+	}
+}
+
 void LinkedList::Clear()
 {
 	//-- Temporary pointer for parsing --//
