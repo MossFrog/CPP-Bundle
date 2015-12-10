@@ -3,7 +3,7 @@
 
 //-- Please feel free to contribute, I will give credit to anyone who desires to add to the bundle. --//
 
-- Current Working Classes -
+> Current Working Classes 
 
-> Linked Lists
-> Stacks
+- Linked Lists
+- Stacks
