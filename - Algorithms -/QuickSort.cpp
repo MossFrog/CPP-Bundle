@@ -9,6 +9,7 @@ void quickSort(vector<int> & unsortedVector);
 
 int main()
 {
+	//-- This section is merely a demonstration of the algorithm, any data can be given to the vector as long as it is comparable. --//
 	vector<int> mainVector;
 	mainVector.push_back(3);
 	mainVector.push_back(5);
@@ -22,6 +23,7 @@ int main()
 		cout << mainVector[i] << endl;
 	}
 
+	//-- Pause Terminal and end. --//
 	cin.get();
 	return 0;
 }
