@@ -35,7 +35,7 @@ int main()
 	sf::RectangleShape primitiveLine;
 
 	vector<sf::Vector2i> pointVector;
-	vector<sf::RectangleShape> lineVector;
+	
 
 	//-- Main Game Loop --//
 	while (mainWindow.isOpen())
@@ -54,9 +54,6 @@ int main()
 				{
 					//-- Place a pinpoint on the given click (add it to the main vector) --//
 					pointVector.push_back(localPosition);
-
-					//-- Draw a line between all the existing points and the new point --//
-
 				}
 			}
 		}
@@ -75,6 +72,19 @@ int main()
 		{
 			gemSprite.setPosition(pointVector[i].x, pointVector[i].y);
 			mainWindow.draw(gemSprite);
+
+
+			for (int j = 0; j < pointVector.size(); j++)
+			{
+				sf::Vertex tempLine[]
+				{
+					sf::Vertex(sf::Vector2f(pointVector[i].x, pointVector[i].y)),
+					sf::Vertex(sf::Vector2f(pointVector[j].x, pointVector[j].y))
+				};
+
+				mainWindow.draw(tempLine, 2, sf::Lines);
+			}
+			
 		}
 
 		//-- Render all the weighted lines between the points --//
