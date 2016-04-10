@@ -52,6 +52,9 @@ int main()
 			{
 				if (event.key.code == sf::Mouse::Left)
 				{
+					bool validPos = false;
+
+					//for (int i = 0; i < ) unfinished method
 					//-- Place a pinpoint on the given click (add it to the main vector) --//
 					pointVector.push_back(localPosition);
 				}
@@ -74,20 +77,25 @@ int main()
 			mainWindow.draw(gemSprite);
 
 
+
+			//-- Render all the weighted lines between the points --//
 			for (int j = 0; j < pointVector.size(); j++)
 			{
-				sf::Vertex tempLine[]
-				{
-					sf::Vertex(sf::Vector2f(pointVector[i].x, pointVector[i].y)),
-					sf::Vertex(sf::Vector2f(pointVector[j].x, pointVector[j].y))
-				};
+				sf::VertexArray tempLine(sf::Lines, 2);
+				
+				tempLine[0].position = sf::Vector2f(pointVector[i].x, pointVector[i].y);
+				tempLine[1].position = sf::Vector2f(pointVector[j].x, pointVector[j].y);
 
-				mainWindow.draw(tempLine, 2, sf::Lines);
+				tempLine[0].color = sf::Color::Red;
+				tempLine[1].color = sf::Color::Blue;
+				
+
+				mainWindow.draw(tempLine);
 			}
 			
 		}
 
-		//-- Render all the weighted lines between the points --//
+		
 
 
 		mainWindow.display();
