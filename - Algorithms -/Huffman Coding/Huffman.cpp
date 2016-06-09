@@ -76,120 +76,59 @@ int main()
 			newNode.numVal = charCountVect[i].count;
 			newNode.left = NULL;
 			newNode.right = NULL;
+			newNode.father = NULL;
 			newNode.topLayer = true;
 			mainTree.push_back(newNode);
 			pinnacleNode = newNode;
 		}
 
 
-		//-- Continue constructing the tree upon the base --//
-		while (pinnacleNode.charVal.length() < charCountVect.size())
+		//-- Continue constructing the tree upon the base removing combined Nodes. --//
+		while (charCountVect.size() > 1)
 		{
+			//-- Select Two Arbitrary Minima --//
 			node minOne;
 			node minTwo;
+			int indexOne;
+			int indexTwo;
 
 			minOne.numVal = INT_MAX;
 			minTwo.numVal = INT_MAX;
 
-			node * tempLeft = NULL;
-			node * tempRight = NULL;
-
-			//-- Locate two arbitrary minimum nodes. --//
-			for (int i = 0; i < mainTree.size(); i++)
+			//-- Remove minima one from the value array after discovery --//
+			for (int i = 0; i < charCountVect.size(); i++)
 			{
-				if (mainTree[i].numVal < minOne.numVal)
+				if (charCountVect[i].count < minOne.numVal)
 				{
-					if (mainTree[i].topLayer == true)
-					{
-						minOne = mainTree[i];
-						mainTree[i].topLayer = false;
-						tempRight = &(mainTree[i]);
-					}
+					minOne.charVal = charCountVect[i].val;
+					minOne.numVal = charCountVect[i].count;
+					indexOne = i;
 				}
 			}
 
-			for (int i = 0; i < mainTree.size(); i++)
+			charCountVect.erase(charCountVect.begin() + indexOne);
+
+			//-- Do the same for minima two --//
+			for (int i = 0; i < charCountVect.size(); i++)
 			{
-				if (mainTree[i].numVal < minTwo.numVal)
+				if (charCountVect[i].count < minTwo.numVal)
 				{
-					if (mainTree[i].topLayer == true)
-					{
-						if (mainTree[i].charVal != minOne.charVal)
-						{
-							minTwo = mainTree[i];
-							mainTree[i].topLayer = false;
-							tempLeft = &(mainTree[i]);
-						}
-					}
+					minTwo.charVal = charCountVect[i].val;
+					minTwo.numVal = charCountVect[i].count;
+					indexTwo = i;
 				}
 			}
 
-			//-- After locating the two minima merge them to form a new node and adjust the Top Layer --//
+			charCountVect.erase(charCountVect.begin() + indexTwo);
 
-			/* -- Debugging Section --
-			cout << minOne.charVal << ": " << minOne.numVal;
-			cout << minTwo.charVal << ": " << minTwo.numVal;
-			cin.ignore();
-			*/
+			cout << minOne.charVal << " " << minOne.numVal << endl;
+			cout << minTwo.charVal << " " << minTwo.numVal << endl;
 
-			node newMerged;
-			newMerged.charVal = "";
-			newMerged.charVal += minTwo.charVal;
-			newMerged.charVal += minOne.charVal;
-			newMerged.topLayer = true;
-			newMerged.left = tempLeft;
-			newMerged.right = tempRight;
-			newMerged.father = NULL;
-			newMerged.numVal = minOne.numVal + minTwo.numVal;
-
-			mainTree.push_back(newMerged);
-			pinnacleNode = newMerged;
+			//-- Merge the two minima togeather and update both the tree and the vector. --//
 
 
-			//-- Adjust the Father Pointer --//
-			for (int i = 0; i < mainTree.size(); i++)
-			{
-				if (mainTree[i].charVal == minOne.charVal)
-				{
-					mainTree[i].father = &(mainTree[mainTree.size() - 1]);
-					//cout << (*mainTree[i].father).charVal << " is the father of " << mainTree[i].charVal << endl;
-				}
 
-				if (mainTree[i].charVal == minTwo.charVal)
-				{
-					mainTree[i].father = &(mainTree[mainTree.size() - 1]);
-					//cout << (*mainTree[i].father).charVal << " is the father of " << mainTree[i].charVal << endl;
-				}
-			}
 		}
-
-
-		//-- Debugging section --//
-		/*
-		for (int i = 0; i < mainTree.size(); i++)
-		{
-			if (mainTree[i].topLayer == true)
-			{
-				cout << mainTree[i].charVal << endl;
-			}
-		}
-
-		cout << pinnacleNode.charVal << endl;
-		*/
-
-		//-- Perform a Post order Depth First Search to get the Binary Character encodings --//
-
-
-		//-- Debugging Section --//
-		
-		node testNode = mainTree[mainTree.size() - 1];
-		while (testNode.charVal.length() > 1)
-		{
-			cout << testNode.charVal << endl;
-			cin.ignore();
-			testNode = *(testNode.left);
-		}
-		//-----------------------//
 
 		cout << endl << "-- Original Text --" << endl << endl;
 		cout << inputText << endl;
