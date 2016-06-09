@@ -10,30 +10,26 @@ struct node
 {
 	string charVal;
 	int numVal;
-	node * left;
-	node * right;
-	node * father;
+	string bitVal;
+	string left;
+	string right;
+	string father;
 	bool topLayer;
+
 };
 
 struct character
 {
-	char val;
+	string val;
 	int count;
-};
-
-struct binaryChar
-{
-	string bitString;
-	string charVal;
 };
 
 ifstream textStream;
 string inLines;
 string inputText;
 
+int expectedCount;
 
 vector<character> charCountVect;
-vector<binaryChar> decodeVector;
 vector<node> mainTree;
 node pinnacleNode;

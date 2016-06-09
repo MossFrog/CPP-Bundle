@@ -2,6 +2,7 @@
 
 int main()
 {
+	//mainTree.resize(1000000);
 	cout << "Please select and Input file." << endl;
 
 	nfdchar_t *outPath = NULL;
@@ -26,7 +27,7 @@ int main()
 			//-- Parse through the Character Count Vector and search for a Match --//
 			for (int j = 0; j < charCountVect.size(); j++)
 			{
-				if (charCountVect[j].val == inputText[i])
+				if (charCountVect[j].val[0] == inputText[i])
 				{
 					//-- If the character is present increment the character count --//
 					present = true;
@@ -59,11 +60,14 @@ int main()
 		}
 
 
+		expectedCount = charCountVect.size();
+
+
 		//-- Debugging section --//
 		/*
 		for (int i = 0; i < charCountVect.size(); i++)
 		{
-			cout << charCountVect[i].val << ": " << charCountVect[i].count << endl;
+		cout << charCountVect[i].val << ": " << charCountVect[i].count << endl;
 		}
 		*/
 
@@ -74,9 +78,9 @@ int main()
 			node newNode;
 			newNode.charVal += charCountVect[i].val;
 			newNode.numVal = charCountVect[i].count;
-			newNode.left = NULL;
-			newNode.right = NULL;
-			newNode.father = NULL;
+			newNode.left = "";
+			newNode.right = "";
+			newNode.father = "";
 			newNode.topLayer = true;
 			mainTree.push_back(newNode);
 			pinnacleNode = newNode;
@@ -121,14 +125,66 @@ int main()
 
 			charCountVect.erase(charCountVect.begin() + indexTwo);
 
+			int tindexOne;
+			int tindexTwo;
+
+			//-- Retrieve minOne and minTwo's indeces in the main tree Vector --//
+			for (int i = 0; i < mainTree.size(); i++)
+			{
+				if (mainTree[i].charVal == minOne.charVal)
+				{
+					tindexOne = i;
+				}
+
+				else if (mainTree[i].charVal == minTwo.charVal)
+				{
+					tindexTwo = i;
+				}
+			}
+
+			//-- Debugging Section --//
+			/*
 			cout << minOne.charVal << " " << minOne.numVal << endl;
 			cout << minTwo.charVal << " " << minTwo.numVal << endl;
+			cin.ignore();
+			*/
 
-			//-- Merge the two minima togeather and update both the tree and the vector. --//
+			//-- Merge the two minima togeather and update both the tree and the Vector. --//
+
+			node combinedNode;
+			combinedNode.charVal = minTwo.charVal + minOne.charVal;
+			combinedNode.numVal = minOne.numVal + minTwo.numVal;
+			combinedNode.father = "";
+			combinedNode.left = mainTree[tindexTwo].charVal;
+			combinedNode.right = mainTree[tindexOne].charVal;
+			combinedNode.topLayer = true;
+			pinnacleNode = combinedNode;
+
+			//-- Push the combined node to the tree and the character count Vector --//
+			mainTree.push_back(combinedNode);
+
+			character tempChar;
+			tempChar.val = combinedNode.charVal;
+			tempChar.count = combinedNode.numVal;
+			charCountVect.push_back(tempChar);
 
 
+			//-- Update the father values --//
+
+			mainTree[tindexOne].father = combinedNode.charVal;
+			mainTree[tindexTwo].father = combinedNode.charVal;
 
 		}
+
+		
+		//-- Debugging Section --//
+		/*
+		cout << mainTree[0].charVal << endl;
+		cout << mainTree[0].father << endl;
+		cin.ignore();*/
+
+
+
 
 		cout << endl << "-- Original Text --" << endl << endl;
 		cout << inputText << endl;
