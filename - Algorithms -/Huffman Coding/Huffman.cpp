@@ -91,6 +91,8 @@ int main()
 			minOne.numVal = INT_MAX;
 			minTwo.numVal = INT_MAX;
 
+			node * tempLeft = NULL;
+			node * tempRight = NULL;
 
 			//-- Locate two arbitrary minimum nodes. --//
 			for (int i = 0; i < mainTree.size(); i++)
@@ -100,6 +102,8 @@ int main()
 					if (mainTree[i].topLayer == true)
 					{
 						minOne = mainTree[i];
+						mainTree[i].topLayer = false;
+						tempRight = &(mainTree[i]);
 					}
 				}
 			}
@@ -113,6 +117,8 @@ int main()
 						if (mainTree[i].charVal != minOne.charVal)
 						{
 							minTwo = mainTree[i];
+							mainTree[i].topLayer = false;
+							tempLeft = &(mainTree[i]);
 						}
 					}
 				}
@@ -125,24 +131,6 @@ int main()
 			cout << minTwo.charVal << ": " << minTwo.numVal;
 			cin.ignore();
 			*/
-
-			node * tempLeft = NULL;
-			node * tempRight = NULL;
-
-			for (int i = 0; i < mainTree.size(); i++)
-			{
-				if (mainTree[i].charVal == minOne.charVal)
-				{
-					mainTree[i].topLayer = false;
-					tempRight = &(mainTree[i]);
-				}
-
-				if (mainTree[i].charVal == minTwo.charVal)
-				{
-					mainTree[i].topLayer = false;
-					tempLeft = &(mainTree[i]);
-				}
-			}
 
 			node newMerged;
 			newMerged.charVal = "";
@@ -164,11 +152,13 @@ int main()
 				if (mainTree[i].charVal == minOne.charVal)
 				{
 					mainTree[i].father = &(mainTree[mainTree.size() - 1]);
+					//cout << (*mainTree[i].father).charVal << " is the father of " << mainTree[i].charVal << endl;
 				}
 
 				if (mainTree[i].charVal == minTwo.charVal)
 				{
 					mainTree[i].father = &(mainTree[mainTree.size() - 1]);
+					//cout << (*mainTree[i].father).charVal << " is the father of " << mainTree[i].charVal << endl;
 				}
 			}
 		}
@@ -189,15 +179,17 @@ int main()
 
 		//-- Perform a Post order Depth First Search to get the Binary Character encodings --//
 
-		while (decodeVector.size() < charCountVect.size())
-		{
-			for (int i = 0; i < mainTree.size(); i++)
-			{
 
-			}
-
-		}
+		//-- Debugging Section --//
 		
+		node testNode = mainTree[mainTree.size() - 1];
+		while (testNode.charVal.length() > 1)
+		{
+			cout << testNode.charVal << endl;
+			cin.ignore();
+			testNode = *(testNode.left);
+		}
+		//-----------------------//
 
 		cout << endl << "-- Original Text --" << endl << endl;
 		cout << inputText << endl;

@@ -10,3 +10,4 @@
 > Currently Functioning Algorithms
 
 - Quicksort
+- Huffman Coding

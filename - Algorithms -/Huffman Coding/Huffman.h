@@ -25,7 +25,7 @@ struct character
 struct binaryChar
 {
 	string bitString;
-	char charVal;
+	string charVal;
 };
 
 ifstream textStream;
