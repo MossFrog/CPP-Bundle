@@ -25,6 +25,7 @@ struct character
 };
 
 ifstream textStream;
+ofstream outputStream;
 string inLines;
 string inputText;
 

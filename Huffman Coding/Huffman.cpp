@@ -17,6 +17,7 @@ int main()
 			inputText += inLines + '\n';
 		}
 
+		textStream.close();
 
 		//-- Loop throughout the entire text and get every character's count --//
 
@@ -220,29 +221,64 @@ int main()
 			}
 		}
 
-		//-- Uncomment this section to see each character's encoding --//
-		/*
+		string keyStr = "";
+		
 		for (int i = 0; i < mainTree.size(); i++)
 		{
 			//-- If the value is an end branch --//
 			if (mainTree[i].charVal.length() == 1)
 			{
-				cout << mainTree[i].charVal << " " << mainTree[i].bitVal << endl;
+				//-- Uncomment this section to see each character's encoding --//
+				//cout << mainTree[i].charVal << " " << mainTree[i].bitVal << endl;
+
+				keyStr = keyStr + mainTree[i].charVal + ": " + mainTree[i].bitVal + '\n';
 			}
 		}
-		*/
+		
 
 		//-- Encode the whole text and also save the key to another folder --//
 
+		string encodedOutput = "";
+
+		for (int i = 0; i < inputText.length(); i++)
+		{
+			int decodeIndex = 0;
+			//-- Find the encoded character representation --//
+			while ((inputText[i] != mainTree[decodeIndex].charVal[0]) || (mainTree[decodeIndex].bitVal.length() == 0))
+			{
+				decodeIndex++;
+			}
+
+			//-- Uncomment this section to see step by step encoding process --//
+			/*
+			cin.ignore();
+			cout << inputText[i] << ": " << mainTree[decodeIndex].bitVal << endl;
+			*/
+
+			encodedOutput += mainTree[decodeIndex].bitVal;
+		}
 
 
-
-
-
-
+		//-- Output both texts --//
 		cout << endl << "-- Original Text --" << endl << endl;
 		cout << inputText << endl;
 		cout << endl;
+
+		cin.ignore();
+
+		cout << endl << "-- Encoded Text --" << endl << endl;
+		cout << encodedOutput << endl;
+		cout << endl;
+
+		//-- Dump the key and the text to an output file --//
+		outputStream.open("EncodedOutput.txt");
+		outputStream << encodedOutput;
+		outputStream.close();
+
+		outputStream.open("Key.txt");
+		outputStream << keyStr;
+		outputStream.close();
+		
 
 	}
 
