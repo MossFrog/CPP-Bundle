@@ -183,6 +183,60 @@ int main()
 		cout << mainTree[0].father << endl;
 		cin.ignore();*/
 
+		//-- Update all the values in the decode vector according to the mainTree --//
+
+		for (int i = 0; i < mainTree.size(); i++)
+		{
+			//-- If the value is an end branch --//
+			if (mainTree[i].charVal.length() == 1)
+			{
+				node tempNode;
+				tempNode = mainTree[i];
+				int fatherIndex;
+				while (tempNode.father != "")
+				{
+					//-- Locate the father --//
+					for (int j = 0; j < mainTree.size(); j++)
+					{
+						if (tempNode.father == mainTree[j].charVal)
+						{
+							fatherIndex = j;
+
+							if (tempNode.charVal == mainTree[j].left)
+							{
+								mainTree[i].bitVal = "0" + mainTree[i].bitVal;
+							}
+
+							else
+							{
+								mainTree[i].bitVal = "1" + mainTree[i].bitVal;
+							}
+						}
+					}
+
+					//-- Update tempnode --//
+					tempNode = mainTree[fatherIndex];
+				}
+			}
+		}
+
+		//-- Uncomment this section to see each character's encoding --//
+		/*
+		for (int i = 0; i < mainTree.size(); i++)
+		{
+			//-- If the value is an end branch --//
+			if (mainTree[i].charVal.length() == 1)
+			{
+				cout << mainTree[i].charVal << " " << mainTree[i].bitVal << endl;
+			}
+		}
+		*/
+
+		//-- Encode the whole text and also save the key to another folder --//
+
+
+
+
 
 
 
