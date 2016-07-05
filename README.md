@@ -11,3 +11,4 @@
 
 - Quicksort
 - Huffman Coding
+- 0/1 Knapsack problem
