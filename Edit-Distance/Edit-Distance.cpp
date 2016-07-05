@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <Windows.h>
 
 using namespace std;
@@ -45,9 +46,56 @@ int main()
 
 	//-- Begin constructing the solution --//
 
+	//-- Fill in the first line and column with the necessary values --//
+	for (int i = 0; i < solutionVector[0].size(); i++)
+	{
+		solutionVector[0][i] = i;
+	}
 
+	for (int i = 0; i < solutionVector.size(); i++)
+	{
+		solutionVector[i][0] = i;
+	}
+
+
+	//-- Conbstruct the rest of the values derived from the first row and column --//
+
+	for (int i = 1; i < solutionVector.size(); i++)
+	{
+		for (int j = 1; j < solutionVector[0].size(); j++)
+		{
+			//-- Check the adjacent values top determine the minimum --//
+			int minVal = INT_MAX;
+
+			minVal = min(solutionVector[i - 1][j], minVal);
+			minVal = min(solutionVector[i][j - 1], minVal);
+			minVal = min(solutionVector[i - 1][j - 1], minVal);
+
+			//-- Determine if the said characters are the same --//
+			if (iStringOne[j - 1] == iStringTwo[i - 1])
+			{
+				//-- Retrieve the previous diagonal Value --//
+				minVal = solutionVector[i - 1][j - 1];
+			}
+			
+			else
+			{
+				minVal += 1;
+			}
+
+			//-- Write the value of the minVal to the solution Vector --//
+
+			solutionVector[i][j] = minVal;
+		}
+	}
+
+
+
+	cout << endl << "The Solution vector is..." << endl;
 	cout << endl;
 	printVector(solutionVector);
+
+	cout << endl << "The Edit Distance is : " << solutionVector[solutionVector.size() - 1][solutionVector[0].size() - 1];
 
 	//-- Pause the console until further input --//
 	cout << endl << "Press any key to exit the program...";
